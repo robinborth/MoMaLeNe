@@ -1,15 +1,15 @@
 import sys
 from PySide6.QtWidgets import QApplication
 from lib.canvas import Canvas
-from lib.simulator import SquareSimulator
-from lib.renderer import SquareRenderer
+from lib.simulator import SquareSimulator, ParticleSimulator
+from lib.renderer import SquareRenderer, ParticleRenderer
 
 
 def main():
     # settings
     width = 800
     height = 600
-    fps = 30
+    fps = 90
 
     # create the application
     app = QApplication(sys.argv)
@@ -23,9 +23,10 @@ def main():
         canvas.render(data=img)
 
     # create simulation
-    simulator = SquareSimulator(init_x=0, init_y=0, size=100)
+    # simulator = SquareSimulator(init_x=0, init_y=0, size=100)
+    simulator = ParticleSimulator()
     # create renderer
-    renderer = SquareRenderer(width=width, height=height)
+    renderer = ParticleRenderer(width=width, height=height)
 
     # create canvas
     canvas = Canvas(
