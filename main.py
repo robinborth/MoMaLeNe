@@ -2,8 +2,8 @@ import sys
 import signal
 from PySide6.QtWidgets import QApplication
 from lib.canvas import Canvas
-from lib.simulator import SquareSimulator, ParticleSimulator
-from lib.renderer import SquareRenderer, ParticleRenderer
+from lib.simulator import Simulator
+from lib.renderer import Renderer
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     app = QApplication(sys.argv)
 
     def signal_handler(sig, frame):
-        print('You pressed Ctrl+C')
+        print("You pressed Ctrl+C")
         sys.exit(app.exit())
 
     def loop():
@@ -28,10 +28,10 @@ def main():
         canvas.render(data=img)
 
     # create simulation
-    # simulator = SquareSimulator(init_x=0, init_y=0, size=100)
-    simulator = ParticleSimulator()
+    simulator = Simulator()
+
     # create renderer
-    renderer = ParticleRenderer(width=width, height=height)
+    renderer = Renderer(width=width, height=height)
 
     # create canvas
     canvas = Canvas(
