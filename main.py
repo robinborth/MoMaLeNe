@@ -1,4 +1,5 @@
 import sys
+import signal
 from PySide6.QtWidgets import QApplication
 from lib.canvas import Canvas
 from lib.simulator import SquareSimulator, ParticleSimulator
@@ -13,6 +14,10 @@ def main():
 
     # create the application
     app = QApplication(sys.argv)
+
+    def signal_handler(sig, frame):
+        print('You pressed Ctrl+C')
+        sys.exit(app.exit())
 
     def loop():
         nonlocal canvas
@@ -36,6 +41,9 @@ def main():
         loop=loop,
     )
     canvas.show()
+
+    # close application on Ctrl+C
+    signal.signal(signal.SIGINT, signal_handler)
 
     # close the application
     sys.exit(app.exec())
