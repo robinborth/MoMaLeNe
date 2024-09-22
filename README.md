@@ -9,17 +9,8 @@ conda create -n momalene python=3.10 -y
 pip install . -e 
 ```
 
-## TODOS
-
-- Specify how to store the FLAME model
-
-
-# Rasterizer
-
-Make sure that ninja is installed, e.g. this is needed for the torch.utils.cpp_extension to work.
-
 ```bash
-sudo apt-get install ninja-build
-sudo apt-get install libnvidia-gl-535
-sudo apt-get install libegl1 
+sudo apt update
+sudo apt install libxcb-cursor0 libx11-xcb1
+sudo apt install xvfb
 ```
