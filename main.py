@@ -8,7 +8,7 @@ from lib.renderer import Renderer
 
 def main():
     # settings
-    width = 800
+    width = 600
     height = 600
     fps = 90
 
