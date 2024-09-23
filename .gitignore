@@ -170,3 +170,5 @@ logs/*
 temp
 conf/local/*
 checkpoints/*.ckpt
+out/
+videos/

@@ -2,23 +2,6 @@ from lib.particle import Particle
 import numpy as np
 import random
 
-######################################################
-#                    (y)
-#                   -1.0
-#                     |
-#                     |
-#                     |
-#                     |
-#                     |
-# -1.0 ------------------------------- 1.0 (x)
-#                     |
-#                     |
-#                     |
-#                     |
-#                     |
-#                    1.0
-######################################################
-
 
 class Simulator:
     """Owns all particles in the world coordinate system. Simulates their movement."""
@@ -27,11 +10,13 @@ class Simulator:
         self,
         num_particles: int = 64,
         gravity: float = 3e-04,
+        border: float = 1.0,
+        damping_factor: float = 1.0,
     ):
         self.particles = self.generate_particle_grid(num_particles=num_particles)
         self.gravity = np.array([0.0, gravity])
-        self.border = 1.0
-        self.damping_factor = 1.2
+        self.border = border
+        self.damping_factor = damping_factor
 
     def generate_particle_grid(self, num_particles: int):
         # Create 10 values from -0.5 to 0.5 for both x and y axes

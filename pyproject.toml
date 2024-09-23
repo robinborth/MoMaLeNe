@@ -15,6 +15,9 @@ dependencies = [
   "notebook",
   "numpy",
   "pandas",
+  "matplotlib",
+  "tqdm",
+  "prettytable",
   "pyside6",
 
   # test
