@@ -1,15 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
-project(point3d)
+project(sphere_rasterizer)
 
-# Find the Python executable
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
+# Add pybind11
+add_subdirectory(../../pybind11 ${CMAKE_CURRENT_BINARY_DIR}/pybind11_build)
 
-# Use the found Python executable
-message(STATUS "Using Python executable: ${Python_EXECUTABLE}")
-
-# Define the module
-set(pybind11_DIR "/opt/homebrew/Caskroom/miniforge/base/envs/momalene/lib/python3.10/site-packages/pybind11/share/cmake/pybind11")
-find_package(pybind11 REQUIRED)
-
-# Create the Python module
-pybind11_add_module(point3d point3d.cpp)
+# Create the Python module using Pybind11
+pybind11_add_module(sphere_rasterizer pybind11.cpp)

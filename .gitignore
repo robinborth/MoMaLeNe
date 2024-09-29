@@ -172,3 +172,13 @@ conf/local/*
 checkpoints/*.ckpt
 out/
 videos/
+
+
+build/
+dist/
+_build/
+_generate/
+*.so
+*.py[cod]
+*.egg-info
+*env*
