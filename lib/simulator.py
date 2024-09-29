@@ -4,18 +4,23 @@ import random
 
 
 class Simulator:
-    """Owns all particles in the world coordinate system. Simulates their movement."""
+    """Owns all particles in the world coordinate system. Simulates their movement.
+
+    @num_particles: Number of particles simulated.
+    @gravity: Value by which to increase a particle's velocity along the y-axis each step.
+    @border: The border of the coordinate system we are simulating in.
+    @damping_factor: The friction to lower the velocity of a particle on each change in direction.
+    """
 
     def __init__(
         self,
         num_particles: int = 64,
         gravity: float = 3e-04,
-        border: float = 1.0,
-        damping_factor: float = 1.0,
+        damping_factor: float = 0.7,
     ):
+        self.border = 1.0
         self.particles = self.generate_particle_grid(num_particles=num_particles)
         self.gravity = np.array([0.0, gravity])
-        self.border = border
         self.damping_factor = damping_factor
 
     def generate_particle_grid(self, num_particles: int):
@@ -34,25 +39,26 @@ class Simulator:
             particles.append(particle)
         return particles
 
-    def border_collision(self, particle: Particle):
-        # Keep particle within lower border
-        if particle.y_position >= (border := self.border - particle.radius):
-            particle.set_y_position(border)
-            particle.set_y_velocity(-particle.y_velocity * self.damping_factor)
-        # Keep particle within upper border
-        elif particle.y_position <= (border := -self.border + particle.radius):
-            particle.set_y_position(border)
-            particle.set_y_velocity(-particle.y_velocity * self.damping_factor)
-        # Keep particle within left border
-        if particle.x_position >= (border := self.border - particle.radius):
-            particle.set_x_position(border)
-            particle.set_x_velocity(-particle.x_velocity * self.damping_factor)
-        # Keep particle within right border
-        elif particle.x_position <= (border := -self.border + particle.radius):
-            particle.set_x_position(border)
-            particle.set_x_velocity(-particle.x_velocity * self.damping_factor)
-
     def step(self):
+        def border_collision(particle: Particle):
+            # Keep particle within lower border
+            if particle.y_position >= (border := self.border - particle.radius):
+                particle.set_y_position(border)
+                particle.set_y_velocity(-particle.y_velocity * self.damping_factor)
+                particle.set_x_velocity(particle.x_velocity * self.damping_factor)
+            # Keep particle within upper border
+            elif particle.y_position <= (border := -self.border + particle.radius):
+                particle.set_y_position(border)
+                particle.set_y_velocity(-particle.y_velocity * self.damping_factor)
+            # Keep particle within left border
+            if particle.x_position >= (border := self.border - particle.radius):
+                particle.set_x_position(border)
+                particle.set_x_velocity(-particle.x_velocity * self.damping_factor)
+            # Keep particle within right border
+            elif particle.x_position <= (border := -self.border + particle.radius):
+                particle.set_x_position(border)
+                particle.set_x_velocity(-particle.x_velocity * self.damping_factor)
+
         # Update the simulation
         for particle in self.particles:
             # Apply gravity
@@ -60,6 +66,7 @@ class Simulator:
             # Update particle
             particle.position += particle.velocity
             # Check particle is within the border
-            self.border_collision(particle=particle)
+            border_collision(particle=particle)
+
         # Return the current state of the simulation
         return self.particles
