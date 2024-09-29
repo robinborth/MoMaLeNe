@@ -2,3 +2,6 @@
 	path = pybind11
 	url = ../../pybind/pybind11
 	branch = stable
+[submodule "glm"]
+	path = glm
+	url = https://github.com/g-truc/glm.git
